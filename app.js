@@ -6,7 +6,7 @@ mongoose.connect('mongodb://localhost:27017/fruitsDB');
 const fruitSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: [true, 'Please check your data entry. No name specified.']
     },
     rating: {
         type: Number,
@@ -19,41 +19,60 @@ const fruitSchema = new mongoose.Schema({
 const Fruit = mongoose.model('Fruit', fruitSchema);
 
 const fruit = new Fruit({
+    name: 'Peach',
     rating: 7,
     review: 'Pretty solid as a fruit.'
 });
 
-fruit.save();
+// fruit.save();
 
-// const personSchema = new mongoose.Schema({
-//     name: String,
-//     age: Number
+const personSchema = new mongoose.Schema({
+    name: String,
+    age: Number,
+    favouriteFruit: fruitSchema
+});
+
+const Person = mongoose.model('Person', personSchema);
+
+const pear = new Fruit({
+    name: 'Pear',
+    rating: 9,
+    review: 'Lovely'
+});
+
+// pear.save();
+
+// const person = new Person({
+//     name: 'Amy',
+//     age: 12,
+//     favouriteFruit: pineapple
 // });
 
-// const Person = mongoose.model('Person', personSchema);
+// person.save();
+
 
 // const person = new Person({
 //     name: 'John',
-//     age: 37
+//     age: 37,
 // });
 
 // person.save();
 
 // const kiwi = new Fruit({
 //     name: 'Kiwi',
-//     score: 10,
+//     rating: 10,
 //     review: 'The best fruit!'
 // });
 
 // const orange = new Fruit({
 //     name: 'Orange',
-//     score: 4,
+//     rating: 4,
 //     review: 'Too sour for me'
 // });
 
 // const banana = new Fruit({
 //     name: 'Banana',
-//     score: 3,
+//     rating: 3,
 //     review: 'Weird texture'
 // })
 
@@ -62,6 +81,22 @@ fruit.save();
 //         console.log(err);
 //     } else {
 //         console.log('Successfully saved all the fruits to fruitsDB');
+//     }
+// });
+
+// Person.updateOne({_id: '63f0e4f0cf4f31471ed6d944'}, {favouriteFruit: pear}, function(err) {
+//     if (err) {
+//         console.log(err)
+//     } else {
+//         console.log('Successfully updated the document.')
+//     }
+// })
+
+// Fruit.deleteOne({_id: '63f0e66a069df8654fcb02b8'}, function(err) {
+//     if (err) {
+//         console.log(err) 
+//     } else {
+//         console.log('Successfully deleted all the Johns');
 //     }
 // });
 
